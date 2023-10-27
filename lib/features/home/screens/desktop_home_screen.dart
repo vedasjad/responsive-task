@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:responsive_page/common/colors/colors.dart';
+import 'package:responsive_page/common/constants.dart';
 
 class DesktopHomeScreen extends StatefulWidget {
   const DesktopHomeScreen({super.key});
@@ -11,29 +12,6 @@ class DesktopHomeScreen extends StatefulWidget {
 }
 
 class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
-  List<String> headersList = [
-    "HOME",
-    "CAREER",
-    "SERVICES",
-    "ABOUT US",
-    "CLIENTS",
-    "TECHSTACK",
-  ];
-  List<String> cardsHeadingFirst = [
-    "Mesmerizing & Beautiful",
-    "Robust & Engaging",
-    "Innovative & Disruptive",
-    "Automated & Efficient",
-    "Cost Effective & Scalable",
-  ];
-  List<String> cardsHeadingSecond = [
-    "UI & UX",
-    "Mobile & Web Apps",
-    "AI / ML Integrations",
-    "Business / Robotic Process Automation",
-    "Cloud Computing",
-  ];
-
   int hoveredCardIndex = -1;
   int hoveredHeaderIndex = -1;
   bool isCallbackHover = false;
@@ -89,7 +67,7 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
                     padding:
                         const EdgeInsets.symmetric(vertical: 1, horizontal: 10),
                     child: Text(
-                      headersList[index],
+                      AppConstants.headersList[index],
                       style: TextStyle(
                         fontSize: screenWidth * 0.013,
                         fontWeight: FontWeight.w600,
@@ -111,9 +89,13 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
                 overlayColor:
                     const MaterialStatePropertyAll(Colors.transparent),
                 child: Container(
-                  margin: const EdgeInsets.fromLTRB(20, 20, 35, 20),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 30, vertical: 13),
+                  margin: EdgeInsets.fromLTRB(
+                      screenWidth * 0.015,
+                      screenWidth * 0.015,
+                      screenWidth * 0.02,
+                      screenWidth * 0.015),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: screenWidth * 0.02, vertical: 13),
                   decoration: BoxDecoration(
                     color: isCallbackHover ? AppColors.green : AppColors.blue,
                     borderRadius: BorderRadius.circular(10),
@@ -140,108 +122,113 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
         ),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 60),
+        padding: EdgeInsets.symmetric(
+            horizontal: screenWidth * 0.06, vertical: screenWidth * 0.04),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               "We Are",
+              softWrap: true,
               style: GoogleFonts.getFont(
                 "Ubuntu",
                 color: AppColors.grey,
-                fontSize: 40,
+                fontSize: screenWidth * 0.04,
                 fontWeight: FontWeight.w700,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 15),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.baseline,
-                textBaseline: TextBaseline.alphabetic,
-                children: [
-                  Text(
-                    "The ",
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.alphabetic,
+              children: [
+                Text(
+                  "The ",
+                  softWrap: true,
+                  style: GoogleFonts.getFont(
+                    "Ubuntu",
+                    color: AppColors.black,
+                    fontSize: screenWidth * 0.04,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 20),
+                  child: Lottie.asset(
+                    "assets/animations/biceps.json",
+                    width: screenWidth * 0.05,
+                    height: screenWidth * 0.05,
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                RichText(
+                  textAlign: TextAlign.left,
+                  text: TextSpan(
                     style: GoogleFonts.getFont(
                       "Ubuntu",
                       color: AppColors.black,
-                      fontSize: 60,
+                      fontSize: screenWidth * 0.04,
                       fontWeight: FontWeight.w700,
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 20),
-                    child: Lottie.asset(
-                      "assets/animations/biceps.json",
-                      width: 80,
-                      height: 80,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                  Text(
-                    "Product Team",
-                    style: GoogleFonts.getFont(
-                      "Montserrat",
-                      color: AppColors.blue,
-                      fontSize: 80,
-                      fontWeight: FontWeight.w900,
-                      shadows: const [
-                        Shadow(
-                          color: AppColors.black,
-                          blurRadius: 0.3,
-                          offset: Offset(1, 1),
+                    children: [
+                      TextSpan(
+                        text: "Product Team ",
+                        style: GoogleFonts.getFont(
+                          "Montserrat",
+                          color: AppColors.blue,
+                          fontSize: screenWidth * 0.05,
+                          fontWeight: FontWeight.w900,
+                          shadows: const [
+                            Shadow(
+                              color: AppColors.black,
+                              blurRadius: 0.3,
+                              offset: Offset(1, 1),
+                            ),
+                            Shadow(
+                              color: AppColors.black,
+                              blurRadius: 0.3,
+                              offset: Offset(-1, -1),
+                            ),
+                            Shadow(
+                              color: AppColors.black,
+                              blurRadius: 0.3,
+                              offset: Offset(1, -1),
+                            ),
+                            Shadow(
+                              color: AppColors.black,
+                              blurRadius: 0.3,
+                              offset: Offset(-1, 1),
+                            ),
+                          ],
                         ),
-                        Shadow(
-                          color: AppColors.black,
-                          blurRadius: 0.3,
-                          offset: Offset(-1, -1),
-                        ),
-                        Shadow(
-                          color: AppColors.black,
-                          blurRadius: 0.3,
-                          offset: Offset(1, -1),
-                        ),
-                        Shadow(
-                          color: AppColors.black,
-                          blurRadius: 0.3,
-                          offset: Offset(-1, 1),
-                        ),
-                      ],
-                    ),
+                      ),
+                      const TextSpan(
+                        text: " you need.",
+                      )
+                    ],
                   ),
-                  Text(
-                    " you need.",
-                    style: GoogleFonts.getFont(
-                      "Ubuntu",
-                      color: AppColors.black,
-                      fontSize: 60,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  child: Expanded(
-                    child: Text(
-                      "What will you build",
-                      style: GoogleFonts.getFont(
-                        "Ubuntu",
-                        color: AppColors.black,
-                        fontSize: 60,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
+                Text(
+                  "What will you build",
+                  softWrap: true,
+                  style: GoogleFonts.getFont(
+                    "Ubuntu",
+                    color: AppColors.black,
+                    fontSize: screenWidth * 0.04,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Lottie.asset(
                     "assets/animations/bulb.json",
-                    width: 80,
-                    height: 80,
+                    width: screenWidth * 0.05,
+                    height: screenWidth * 0.05,
                     fit: BoxFit.contain,
                   ),
                 ),
@@ -249,10 +236,11 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   child: Text(
                     " now?",
+                    softWrap: true,
                     style: GoogleFonts.getFont(
                       "Ubuntu",
                       color: AppColors.black,
-                      fontSize: 60,
+                      fontSize: screenWidth * 0.04,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -292,8 +280,9 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
                       child: Container(
                         width: screenWidth / 6.8,
                         height: screenWidth / 6.9,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 25, vertical: 20),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth * 0.02,
+                            vertical: screenWidth * 0.01),
                         child: Stack(
                           alignment: Alignment.centerRight,
                           children: [
@@ -304,7 +293,7 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        cardsHeadingFirst[index],
+                                        AppConstants.cardsHeadingFirst[index],
                                         style: TextStyle(
                                           color: AppColors.grey,
                                           fontSize: screenWidth * 0.014,
@@ -319,7 +308,7 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        cardsHeadingSecond[index],
+                                        AppConstants.cardsHeadingSecond[index],
                                         textAlign: TextAlign.end,
                                         style: TextStyle(
                                           color: AppColors.black,
@@ -341,10 +330,10 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
                                         width: 2,
                                       ),
                                     ),
-                                    child: const Icon(
+                                    child: Icon(
                                       Icons.arrow_forward,
                                       color: AppColors.blue,
-                                      size: 30,
+                                      size: screenWidth * 0.02,
                                     ),
                                   )
                                 : const SizedBox(),
