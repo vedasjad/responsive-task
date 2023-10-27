@@ -38,6 +38,7 @@ dependencies:
   google_fonts: ^6.1.0
   lottie: ^2.7.0
   firebase_core:
+  url_launcher:
 
 dev_dependencies:
   flutter_test:

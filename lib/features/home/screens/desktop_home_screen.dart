@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:responsive_page/common/colors/colors.dart';
 import 'package:responsive_page/common/constants.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DesktopHomeScreen extends StatefulWidget {
   const DesktopHomeScreen({super.key});
@@ -27,7 +28,7 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
         surfaceTintColor: AppColors.white,
         scrolledUnderElevation: 0,
         // forceMaterialTransparency: true,
-        elevation: 10,
+        elevation: 5,
         shadowColor: AppColors.grey.withOpacity(0.5),
         leadingWidth: screenWidth * 0.2,
         title: Container(
@@ -59,7 +60,10 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
                       }
                     });
                   },
-                  onTap: () {},
+                  onTap: () async {
+                    var url = Uri.parse(AppConstants.headersUrlList[index]);
+                    await launchUrl(url);
+                  },
                   child: Container(
                     color: hoveredHeaderIndex == index
                         ? AppColors.green
@@ -103,7 +107,7 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
                       color: isCallbackHover
                           ? AppColors.black
                           : Colors.transparent,
-                      width: 0.1,
+                      width: 1.5,
                     ),
                   ),
                   child: Text(
@@ -265,7 +269,10 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
                         }
                       });
                     },
-                    onTap: () {},
+                    onTap: () async {
+                      var url = Uri.parse(AppConstants.cardUrl[index]);
+                      await launchUrl(url);
+                    },
                     child: Card(
                       shape: Border.all(
                         width: hoveredCardIndex == index ? 3 : 0.5,

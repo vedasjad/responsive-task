@@ -1,8 +1,10 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:responsive_page/common/colors/colors.dart';
 import 'package:responsive_page/common/constants.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PhoneHomeScreen extends StatefulWidget {
   const PhoneHomeScreen({super.key});
@@ -15,6 +17,7 @@ class _PhoneHomeScreenState extends State<PhoneHomeScreen> {
   int hoveredCardIndex = -1;
   int hoveredHeaderIndex = -1;
   bool isCallbackHover = false;
+  bool isCallbackHoverDrawer = false;
   bool isDrawerOpen = false;
   @override
   Widget build(BuildContext context) {
@@ -27,7 +30,6 @@ class _PhoneHomeScreenState extends State<PhoneHomeScreen> {
         backgroundColor: AppColors.white,
         surfaceTintColor: AppColors.white,
         scrolledUnderElevation: 0,
-        // forceMaterialTransparency: true,
         elevation: isDrawerOpen ? 0 : 4,
         shadowColor: AppColors.grey.withOpacity(0.5),
         leadingWidth: screenWidth * 0.45,
@@ -50,13 +52,19 @@ class _PhoneHomeScreenState extends State<PhoneHomeScreen> {
                 isDrawerOpen = !isDrawerOpen;
               });
             },
-            child: const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Icon(
-                Icons.menu,
-                color: AppColors.blue,
-                size: 30,
-              ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: isDrawerOpen
+                  ? const Icon(
+                      Icons.cancel_outlined,
+                      color: AppColors.blue,
+                      size: 30,
+                    )
+                  : const Icon(
+                      Icons.menu,
+                      color: AppColors.blue,
+                      size: 30,
+                    ),
             ),
           ),
         ],
@@ -279,6 +287,12 @@ class _PhoneHomeScreenState extends State<PhoneHomeScreen> {
                                     TextSpan(
                                       text: AppConstants
                                           .cardsHeadingSecond[index],
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () async {
+                                          var url = Uri.parse(
+                                              AppConstants.cardUrl[index]);
+                                          await launchUrl(url);
+                                        },
                                       style: const TextStyle(
                                         decoration: TextDecoration.underline,
                                         decorationColor: AppColors.blue,
@@ -328,7 +342,7 @@ class _PhoneHomeScreenState extends State<PhoneHomeScreen> {
                               color: isCallbackHover
                                   ? AppColors.black
                                   : Colors.transparent,
-                              width: 0.1,
+                              width: 1.5,
                             ),
                           ),
                           child: Text(
@@ -357,101 +371,105 @@ class _PhoneHomeScreenState extends State<PhoneHomeScreen> {
                   width: screenWidth,
                   color: AppColors.white,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: List<Widget>.generate(
-                          6,
-                          (index) {
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 5),
-                              child: InkWell(
-                                onHover: (isHover) {
-                                  setState(() {
-                                    if (isHover) {
-                                      hoveredHeaderIndex = index;
-                                    } else {
-                                      hoveredHeaderIndex = -1;
-                                    }
-                                  });
-                                },
-                                onTap: () {},
-                                child: Container(
-                                  color: hoveredHeaderIndex == index
-                                      ? AppColors.green
-                                      : Colors.transparent,
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 1, horizontal: 10),
-                                  child: Text(
-                                    AppConstants.headersList[index],
-                                    style: TextStyle(
-                                      color: AppColors.black,
-                                      fontSize: screenWidth * 0.03,
-                                      fontWeight: FontWeight.w700,
+                    children: List<Widget>.generate(
+                      7,
+                      (index) {
+                        return index < 6
+                            ? Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 5),
+                                child: InkWell(
+                                  onHover: (isHover) {
+                                    setState(
+                                      () {
+                                        if (isHover) {
+                                          hoveredHeaderIndex = index;
+                                        } else {
+                                          hoveredHeaderIndex = -1;
+                                        }
+                                      },
+                                    );
+                                  },
+                                  onTap: () async {
+                                    var url = Uri.parse(
+                                        AppConstants.headersUrlList[index]);
+                                    await launchUrl(url);
+                                  },
+                                  child: Container(
+                                    color: hoveredHeaderIndex == index
+                                        ? AppColors.green
+                                        : Colors.transparent,
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 1, horizontal: 10),
+                                    child: Text(
+                                      AppConstants.headersList[index],
+                                      style: TextStyle(
+                                        color: AppColors.black,
+                                        fontSize: screenWidth * 0.03,
+                                        fontWeight: FontWeight.w700,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: InkWell(
-                              onHover: (isHover) {
-                                setState(() {
-                                  isCallbackHover = isHover;
-                                });
-                              },
-                              onTap: () {},
-                              splashColor: Colors.transparent,
-                              splashFactory: NoSplash.splashFactory,
-                              overlayColor: const MaterialStatePropertyAll(
-                                  Colors.transparent),
-                              child: Container(
-                                margin: EdgeInsets.fromLTRB(
-                                    screenWidth * 0.015,
-                                    screenWidth * 0.015,
-                                    screenWidth * 0.02,
-                                    screenWidth * 0.015),
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: screenWidth * 0.02,
-                                    vertical: 13),
-                                decoration: BoxDecoration(
-                                  color: isCallbackHover
-                                      ? AppColors.green
-                                      : AppColors.blue,
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                    color: isCallbackHover
-                                        ? AppColors.black
-                                        : Colors.transparent,
-                                    width: 1.5,
+                              )
+                            : Row(
+                                children: [
+                                  Expanded(
+                                    child: InkWell(
+                                      onHover: (isHover) {
+                                        setState(() {
+                                          isCallbackHoverDrawer = isHover;
+                                        });
+                                      },
+                                      onTap: () {},
+                                      splashColor: Colors.transparent,
+                                      splashFactory: NoSplash.splashFactory,
+                                      overlayColor:
+                                          const MaterialStatePropertyAll(
+                                              Colors.transparent),
+                                      child: Container(
+                                        margin: EdgeInsets.fromLTRB(
+                                            screenWidth * 0.015,
+                                            screenWidth * 0.015,
+                                            screenWidth * 0.02,
+                                            screenWidth * 0.015),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: screenWidth * 0.02,
+                                            vertical: 13),
+                                        decoration: BoxDecoration(
+                                          color: isCallbackHoverDrawer
+                                              ? AppColors.green
+                                              : AppColors.blue,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          border: Border.all(
+                                            color: isCallbackHoverDrawer
+                                                ? AppColors.black
+                                                : Colors.transparent,
+                                            width: 1.5,
+                                          ),
+                                        ),
+                                        child: Text(
+                                          "GET A CALLBACK",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: isCallbackHoverDrawer
+                                                ? AppColors.black
+                                                : AppColors.white,
+                                            fontSize: screenWidth * 0.032,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                                child: Text(
-                                  "GET A CALLBACK",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: isCallbackHover
-                                        ? AppColors.black
-                                        : AppColors.white,
-                                    fontSize: screenWidth * 0.032,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
+                                ],
+                              );
+                      },
+                    ),
                   ),
                 )
               : const SizedBox(),
