@@ -2,9 +2,11 @@
 
 A mini clone of https://aimedlabs.com
 
-![Desktop View](screenshots/desktop-view-1.png)
-![Phone View - Home](screenshots/phone-view-1.jpg)
-![Phone View - Drawer](screenshots/phone-view-2.jpg)
+## Screenshots
+
+![Desktop View](screenshots/desktop-view-1.png?raw=true "DESKTOP VIEW")
+<img src="screenshots/phone-view-2.jpg" width="45%" alt="PHONE VIEW" title="PHONE VIEW - Home">
+<img src="screenshots/phone-view-1.jpg" width="45%" alt="PHONE VIEW" title="PHONE VIEW - Drawer">
 
 ## Features
 
